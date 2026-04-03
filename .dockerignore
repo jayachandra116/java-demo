@@ -1,0 +1,23 @@
+# Ignore build artifacts (we usually build inside Docker or copy the specific JAR)
+target/
+*.jar
+
+# Ignore version control
+.git
+.gitignore
+
+# Ignore IDE files
+.idea/
+*.iml
+.vscode/
+.settings/
+.classpath
+.project
+
+# Ignore documentation and logs
+README.md
+*.log
+HELP.md
+
+# Ignore local environment configurations
+.env
