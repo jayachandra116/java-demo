@@ -14,7 +14,7 @@ pipeline {
 
         stage('Checkout') {
             steps {
-                git 'https://github.com/jayachandra116/java-demo.git'
+                git branch: 'main', url: 'https://github.com/jayachandra116/java-demo.git'
             }
         }
         stage('Build with Maven (Docker)') {
