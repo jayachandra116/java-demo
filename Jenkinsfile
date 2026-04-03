@@ -1,16 +1,17 @@
 pipeline {
-    agent {
-        docker {
-            image 'maven:3.9.6-eclipse-temurin-17'
-        }
-    }
+    agent any
 
     environment {
         IMAGE_NAME = "java-demo"
     }
 
     stages {
-        stage('Build with Maven') {
+        stage('Build with Maven (Docker)') {
+            agent {
+                docker {
+                    image 'maven:3.9.6-eclipse-temurin-17'
+                }
+            }
             steps {
                 sh 'mvn clean package'
             }
