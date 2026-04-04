@@ -7,11 +7,6 @@ pipeline {
 
     stages {
 
-        stage('Checkout') {
-            steps {
-                git branch: 'main', url: 'https://github.com/jayachandra116/java-demo.git'
-            }
-        }
         stage('Build with Maven (Docker)') {
             agent {
                 docker {
