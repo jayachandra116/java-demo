@@ -1,11 +1,6 @@
 pipeline {
     agent any
 
-    tools {
-        maven 'MAVEN3'
-        jdk 'JDK21'
-    }
-
     environment {
         IMAGE_NAME = "java-demo"
     }
