@@ -23,6 +23,12 @@ pipeline {
                 sh 'mvn test'
             }
         }
+
+        stage('Code Quality'){
+            steps{
+                sh 'mvn sonar:sonar'
+            }
+        }
     }
 
     post {
