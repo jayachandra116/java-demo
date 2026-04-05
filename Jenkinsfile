@@ -41,11 +41,30 @@ pipeline {
                 '''
             }
         }
-        
+
         stage('Docker Build') {
             steps {
                 echo 'Building Docker image...'
-                sh 'docker build -t java-demo .'
+                script {
+                    def tag ="${env.BUILD_NUMBER}"
+                    sh """
+                    docker build -t ${IMAGE_NAME}:${tag} .
+                    docker tag ${IMAGE_NAME}:${tag} ${IMAGE_NAME}:latest
+                    """
+                }
+            }
+        }
+
+        stage('Push to Docker Hub') {
+            steps {
+                echo 'Pushing Docker image to Docker Hub...'
+                withCredentials([usernamePassword(credentialsId: 'dockerhub-credentials', usernameVariable: 'DOCKERHUB_USERNAME', passwordVariable: 'DOCKERHUB_PASSWORD')]) {
+                    sh '''
+                    echo $DOCKERHUB_PASSWORD | docker login -u $DOCKERHUB_USERNAME --password-stdin
+                    docker tag java-demo:latest $DOCKERHUB_USERNAME/java-demo:latest
+                    docker push $DOCKERHUB_USERNAME/java-demo:latest
+                    '''
+                }
             }
         }
     }
