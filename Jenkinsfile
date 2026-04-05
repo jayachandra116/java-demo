@@ -32,6 +32,16 @@ pipeline {
                 sh 'mvn package -DskipTests'
             }
         }
+
+        stage('Verify Build') {
+            steps {
+                sh '''
+                echo "Checking target folder..."
+                ls -l target/
+                '''
+            }
+        }
+        
         stage('Docker Build') {
             steps {
                 echo 'Building Docker image...'
