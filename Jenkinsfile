@@ -2,8 +2,8 @@ pipeline {
     agent any
 
     tools {
-        maven 'MAVEN3.9' // Name used in Global Tool Configuration
-        jdk 'JDK17'      // Name used in Global Tool Configuration
+        maven 'MAVEN3.9' 
+        jdk 'JDK17'
     }
 
     environment {
@@ -14,19 +14,28 @@ pipeline {
 
         stage('Build with Maven (Docker)') {
             steps {
-                sh 'mvn clean package'
+                echo 'Building ...'
+                sh 'mvn clean compile'
             }
         }
 
         stage('Test'){
+            echo 'Running tests ...'
             steps {
                 sh 'mvn test'
             }
         }
 
-        stage('Code Quality'){
-            steps{
-                sh 'mvn sonar:sonar'
+        stage('Package') {
+            steps {
+                echo 'Packaging JAR/WAR...'
+                sh 'mvn package -DskipTests'
+            }
+        }
+        stage('Docker Build') {
+            steps {
+                echo 'Building Docker image...'
+                sh 'docker build -t java-demo .'
             }
         }
     }
