@@ -1,6 +1,6 @@
 # Ignore build artifacts (we usually build inside Docker or copy the specific JAR)
 target/*
-!targe/java-demo-1.0.jar
+!target/*.jar
 
 # Ignore version control
 .git
